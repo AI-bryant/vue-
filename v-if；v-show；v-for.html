@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-if；v-show；v-for</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <!-- v-if的情况下div将被彻底删除，
+        v-show的情况下默认style中添加display：none，并未删除该dom -->
+        <div v-if="show">hello world</div>
+        <button @click="handleClick">toggle</button>
+        <!-- v-for 用来控制一组数据 循环展示 -->
+        <ul>
+            <!-- <li v-for="item of list" :key="item">{{item}}</li> -->
+            <li v-for="(item,index) of list" :key="index">{{item}}</li>
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el:'#root',
+            data:{
+                show: true,
+                list:[1,2,3]
+            },
+            methods:{
+                handleClick:function(){
+                    this.show= !this.show
+                }
+            }
+        })
+    </script>
+</body>
+</html>

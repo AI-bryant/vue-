@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>todoList组件拆分</title>
+    <script src="../vue.js"></script>
+</head>
+<body>
+<!-- 该样例使用全局组件 -->
+<!-- 每一个组件也是一个vue实例，每一个组件中也可以添加vue实例中的参数
+ 例如data，methods，components-->
+    <div id="root">
+        <input v-model="inputValue">
+        <button @click="go">提交</button>
+
+        <ul>
+            <!--<li v-for="(item,index) of list" key="index">{{item}}</li>-->
+            <todo-item
+                v-for="(item,index) of list"
+                :key="item"
+                :content="item"
+            >
+
+            </todo-item>
+        </ul>
+    </div>
+
+    <script>
+        //全局组件
+        Vue.component('todo-item',{
+            props:['content'],
+            template:'<li @click="go">{{content}}</li>',
+            methods:{
+                go:function(){
+                    alert('show')
+                }
+            }
+        })
+
+        //局部组件,需要在vue对象中配置components
+        var todoList ={
+            template:'<li>item</li>'
+        }
+
+        //如果在Vue实例中没有定义template，则他会将挂载点下所有dom定义为一个模板
+        new Vue({
+            el:"#root",
+            components:{
+                'todo-list':todoList
+            },
+            data:{
+                inputValue:'',
+                list:[]
+            },
+            methods:{
+                go:function(){
+                    this.list.push(this.inputValue)
+                    this.inputValue=''
+                }
+            }
+        })
+    </script>
+</body>
+</html>
